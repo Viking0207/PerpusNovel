@@ -74,9 +74,6 @@
     </div>
   </div>
 
-  <!-- <a class="btn bg-teal-700 text-slate-300 hover:bg-teal-900 text-base"
-        routerLink="cont-me">Contact Me</a
-      > -->
 </div>
 
 <script src="navigation.js"></script>

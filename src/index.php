@@ -9,7 +9,6 @@ include 'connect.php';
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>PerpusNovel</title>
     <link href="../dist/styles.css" rel="stylesheet" />
-    <link rel="stylesheet" href="../node_modules/swiper/swiper-bundle.css" />
   </head>
   <body>
     <!-- Navigation -->
@@ -36,6 +35,5 @@ include 'connect.php';
     <?php include('Header & Footer/foot.php'); ?>
 
     <script src="./Header & Footer/navigation.js"></script>
-    <script src="../node_modules/swiper/swiper-bundle.js"></script>
   </body>
 </html>
