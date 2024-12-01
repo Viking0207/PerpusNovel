@@ -24,16 +24,28 @@ $error = "";
     <!-- Konten Hero -->
     <div id="content-con">
       <?php
-        // Mendapatkan parameter 'content' dari URL
-        $content = isset($_GET['content']) ? $_GET['content'] : 'home_page'; // Default ke 'home'
-        $file = "Content/{$content}.php"; // Path file yang ingin dimuat
-
-        // Memeriksa apakah file ada, lalu menyertakan file tersebut
-        if (file_exists($file)) {
-            include($file);
+      // Mendapatkan parameter 'content' dari URL
+      $content = isset($_GET['content']) ? $_GET['content'] : 'home_page'; // Default ke 'home'
+      $id = isset($_GET['id']) ? $_GET['id'] : null;
+      
+        if ($content === 'detail' && $id) {
+          // Menampilkan detail buku berdasarkan ID
+          $sql = "SELECT * FROM data_perpus WHERE id = $id";
+          $result = mysqli_query($connect, $sql);
+          if ($row = mysqli_fetch_assoc($result)) {
+              include('Content/detail.php'); // Include file detail.php
+          } else {
+              echo "<h1>Buku tidak ditemukan!</h1>";
+          }
         } else {
-            // Jika file tidak ditemukan, tampilkan pesan error
-            echo "<h1>404 Content Not Found</h1>";
+          $file = "Content/{$content}.php"; // Path file yang ingin dimuat
+          // Memeriksa apakah file ada, lalu menyertakan file tersebut
+          if (file_exists($file)) {
+              include($file);
+          } else {
+              // Jika file tidak ditemukan, tampilkan pesan error
+              echo "<h1>404 Content Not Found</h1>";
+          }
         }
       ?>
     </div>

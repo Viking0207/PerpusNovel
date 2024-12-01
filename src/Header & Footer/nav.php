@@ -8,9 +8,9 @@
       <ul
         tabindex="0"
         class="menu menu-sm dropdown-content bg-neutral dark:bg-slate-300 dark:text-base-content text-neutral-content rounded-box z-[2] mt-3 w-52 p-2 shadow">
-        <li><a routerLink="home">Home</a></li>
-        <li><a routerLink="/about/intro">Novel List</a></li>
-        <li><a routerLink="blog">Bookmark</a></li>
+        <li><a href="?content=home_page">Home</a></li>
+        <li><a  href="?content=novelList">Novel List</a></li>
+        <li><a href="?content=bookmark">Bookmark</a></li>
       </ul>
     </div>
 
@@ -56,7 +56,8 @@
         type="text"
         id="search"
         class="w-full p-2 pl-7 text-slate-300 dark:text-slate-900 bg-neutral dark:bg-white rounded-3xl focus:outline-none focus:ring-2 focus:ring-teal-300"
-        placeholder="Search..." />
+        placeholder="Search..."
+        onkeyup="searchBook()" />
       <svg
         xmlns="http://www.w3.org/2000/svg"
         class="absolute right-5 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400"
@@ -71,12 +72,43 @@
           stroke-linejoin="round"
           d="M21 21l-4.35-4.35M9 14a5 5 0 1 0 0-10 5 5 0 0 0 0 10z" />
       </svg>
+      <div id="searchResult" class="bg-base-content text-base-content max-h-48 overflow-y-auto absolute w-full z-10 mt-3 left-3"></div>
     </div>
   </div>
 
 </div>
 
 <script src="navigation.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+  function searchBook() {
+      let query = document.getElementById("search").value;
+      const searchResult = document.getElementById("searchResult");
+      console.log(query);  // Debugging untuk melihat query
+      if (query.length >= 1) {
+          $.ajax({
+              url: "/Project-PerpustakaanNovel/src/Header & Footer/search.php",
+              type: "GET",
+              data: {
+                  query: query
+              },
+              success: function(response) {
+                  document.getElementById("searchResult").innerHTML = response;
+              }
+          });
+      } else {
+          document.getElementById("searchResult").innerHTML = '';
+      }
+
+      // Cek apakah input tidak kosong untuk menambahkan/menghapus border
+      if (query.length >= 1) {
+        searchResult.classList.add("border", "border-gray-500"); // Menambahkan border
+      } else {
+        searchResult.classList.remove("border", "border-gray-500"); // Menghapus border
+      }
+  }
+</script>
 
 <style>
   @import url("https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,200..1000;1,200..1000&display=swap");
