@@ -1,3 +1,8 @@
 # Tambahkan MIME type untuk SVG
 AddType image/svg+xml svg
 AddType image/svg+xml svgz
+
+# Batasi akses hanya ke file gambar
+<FilesMatch "\.(jpg|jpeg|png|gif|webp)$">
+    Require all granted
+</FilesMatch>

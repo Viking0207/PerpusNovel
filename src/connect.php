@@ -4,8 +4,8 @@ $user = "root";
 $pass = "";
 $db = "db_perpusnovel";
 
-$conect = mysqli_connect($host, $user, $pass, $db);
-if (!$conect) {
+$connect = mysqli_connect($host, $user, $pass, $db);
+if (!$connect) {
     die("Tidak bisa terkoneksi ke database");
 }
 ?>

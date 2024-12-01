@@ -1,7 +1,14 @@
 <?php
 include 'connect.php';
-
+$title = "";
+$author = "";
+$year = "";
+$sypno = "";
+$img = "";
+$success = "";
+$error = "";
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -18,7 +25,7 @@ include 'connect.php';
     <div id="content-con">
       <?php
         // Mendapatkan parameter 'content' dari URL
-        $content = isset($_GET['content']) ? $_GET['content'] : 'home'; // Default ke 'home'
+        $content = isset($_GET['content']) ? $_GET['content'] : 'home_page'; // Default ke 'home'
         $file = "Content/{$content}.php"; // Path file yang ingin dimuat
 
         // Memeriksa apakah file ada, lalu menyertakan file tersebut
