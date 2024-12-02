@@ -78,20 +78,20 @@
 
 </div>
 
-<script src="navigation.js"></script>
+<script src="Header & Footer/navigation.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <script>
   function searchBook() {
-      let query = document.getElementById("search").value;
+      let searchInput = document.getElementById("search").value;
       const searchResult = document.getElementById("searchResult");
-      console.log(query);  // Debugging untuk melihat query
-      if (query.length >= 1) {
+      console.log(searchInput);  // Debugging untuk melihat query
+      if (searchInput.length >= 1) {
           $.ajax({
               url: "/Project-PerpustakaanNovel/src/Header & Footer/search.php",
               type: "GET",
               data: {
-                  query: query
+                  query: searchInput
               },
               success: function(response) {
                   document.getElementById("searchResult").innerHTML = response;
@@ -102,7 +102,7 @@
       }
 
       // Cek apakah input tidak kosong untuk menambahkan/menghapus border
-      if (query.length >= 1) {
+      if (searchInput.length >= 1) {
         searchResult.classList.add("border", "border-gray-500"); // Menambahkan border
       } else {
         searchResult.classList.remove("border", "border-gray-500"); // Menghapus border

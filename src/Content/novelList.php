@@ -1,67 +1,46 @@
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
 
 <div class="min-h-screen">
-    <?php
-    // Proses hanya jika form di-submit
-    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-        $id = isset($_POST['id']) ? intval($_POST['id']) : 0;
+    <div class="filter-section">
+        <select id="bookType" class="border p-2 rounded-md">
+            <option>Pilih Tipe Buku</option>
+            <option value="novel">Novel</option>
+            <option value="komik">Komik</option>
+        </select>
 
-        if ($id > 0) {
-            // Query untuk mengambil data berdasarkan ID
-            $sql = "SELECT judul_buku, pengarang, tahun, sypnosis, gambar FROM data_perpus WHERE id = $id";
-            $result = mysqli_query($connect, $sql);
-
-            if ($result && mysqli_num_rows($result) > 0) {
-                // Data ditemukan
-                $row = mysqli_fetch_assoc($result);
-                $title = $row['judul_buku'];
-                $author = $row['pengarang'];
-                $year = $row['tahun'];
-                $sypno = $row['sypnosis'];
-                $img = $row['gambar'];
-                $success = "Data berhasil diambil.";
-            } else {
-                $error = "Data tidak ditemukan.";
-            }
-
-            // Bebaskan hasil query
-            if ($result) {
-                mysqli_free_result($result);
-            }
-        } else {
-            $error = "ID tidak valid.";
-        }
-    }
-
-    // Tutup koneksi
-    mysqli_close($connect);
-
-    ?>
-
-    <h1>Cari Data Buku</h1>
-    <div class="mb-5">
-        <form method="POST" action="">
-            <label for="id">Masukkan ID Buku:</label>
-            <input class="p-3 text-base"  type="number" id="id" name="id" required>
-            <button class="py-3 px-5 text-base cursor-pointer" type="submit">Cari</button>
-        </form>
+        <select id="bookGenre" class="border p-2 rounded-md" disabled>
+            <option>Pilih Genre</option>
+        </select>
     </div>
 
-    <?php if ($error): ?>
-        <p class="text-red-700"><?php echo htmlspecialchars($error); ?></p>
-    <?php endif; ?>
 
-    <?php if ($success): ?>
-        <p class="text-green-700"><?php echo htmlspecialchars($success); ?></p>
-        <h2>Detail Buku</h2>
-        <p><strong>Judul Buku:</strong> <?php echo htmlspecialchars($title); ?></p>
-        <p><strong>Pengarang:</strong> <?php echo htmlspecialchars($author); ?></p>
-        <p><strong>Tahun Terbit:</strong> <?php echo htmlspecialchars($year); ?></p>
-        <p><strong>Sinopsis:</strong> <?php echo htmlspecialchars($sypno); ?></p>
-        <?php if ($img): ?>
-            <img src="<?php echo htmlspecialchars($img); ?>" alt="Gambar Buku" class="max-w-52 h-auto mt-3">
-        <?php else: ?>
-            <p>(Tidak ada gambar tersedia)</p>
-        <?php endif; ?>
-    <?php endif; ?>
+    <div id="bookList" class="mt-5 p-6 bg-neutral dark:bg-slate-300 text-white dark:text-black rounded-md">
+        <div class="grid grid-cols-5 gap-4 mt-8">
+            <?php
+            include 'connect.php';
+
+            // Fetch data
+            $result = mysqli_query($connect, "SELECT * FROM data_perpus");
+            while ($row = mysqli_fetch_assoc($result)) {
+                $gambarPath = file_exists('../uploads/' . $row['gambar']) ? '../uploads/' . $row['gambar'] : '../uploads/TLOTR.jpg';
+                echo "
+            <div class='bg-white rounded-lg shadow-md flex flex-col items-center'>
+                <!-- Bagian Gambar -->
+                <div class='relative'>
+                    <img src='{$gambarPath}' alt='Book Image' class='w-auto max-w-[150px] h-96 object-contain scale-90 rounded-t-lg p-4' />
+                </div>
+                
+                <!-- Bagian Konten -->
+                <div class='py-2 px-6'>
+                    <h2 class='text-lg font-bold mb-1 text-center'>{$row['judul_buku']}</h2>
+                    <p class='text-sm text-gray-600 text-center'>By {$row['pengarang']}</p>
+                    <p class='text-sm text-gray-600 text-center mt-1'>Genre: {$row['genre']}</p>
+                </div>
+            </div>";
+            }
+            ?>
+        </div>
+    </div>
 </div>
+
+<script src="Content/lists.js"></script>

@@ -100,6 +100,7 @@ const navigation = new Navigation();
 const searchIcon = document.getElementById('search-icon');
 const searchInput = document.getElementById('search');
 
+// Menangani klik pada ikon pencarian
 searchIcon.addEventListener('click', () => {
   const query = searchInput.value;
   if (query) {
@@ -109,3 +110,14 @@ searchIcon.addEventListener('click', () => {
   }
 });
 
+// Menangani pencarian dengan menekan tombol Enter
+searchInput.addEventListener('keydown', (event) => {
+  if (event.key === 'Enter') { // Memeriksa apakah tombol yang ditekan adalah Enter
+    const query = searchInput.value;
+    if (query) {
+      alert('Searching for: ' + query);
+    } else {
+      alert('Please enter a search query!');
+    }
+  }
+});

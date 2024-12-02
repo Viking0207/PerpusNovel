@@ -53,6 +53,6 @@ $error = "";
     <!-- Footer -->
     <?php include('Header & Footer/foot.php'); ?>
 
-    <script src="./Header & Footer/navigation.js"></script>
+    <script src="Header & Footer/navigation.js"></script>
   </body>
 </html>
